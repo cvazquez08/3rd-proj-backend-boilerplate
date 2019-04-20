@@ -14,6 +14,9 @@ const session = require('express-session');
 // import passport docs from config folder
 const passportSetup =  require('./config/passport/passport-setup');
 
+// require CORS => connects backend to frontend
+const cors = require('cors');
+
 mongoose
 // .connect('mongodb://localhost/phones-backend', {useNewUrlParser: true})
   .connect(process.env.MONGODB_URI, {useNewUrlParser: true})
@@ -53,6 +56,15 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
+
+
+// allow CORS (Cross Origin Resource Sharing)
+app.use(cors({
+  // credentials: true => allows other origins / domains to send cookie
+  credentials: true,
+  // origin => array of domains that can receive cookies
+  origin: [ 'http://localhost:3000']
+}));
 
 // handle session here:
 // app.js
